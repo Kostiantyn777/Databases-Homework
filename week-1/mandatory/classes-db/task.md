@@ -6,6 +6,109 @@ Below you will find a set of tasks for you to complete to set up a databases of 
 
 To submit this homework write the correct commands for each question here:
 
+/// Task 1
+
+createdb cyf_classes
+
+
+/// Task 2
+
+CREATE TABLE mentors (
+id                             SERIAL PRIMARY KEY,
+name                           VARCHAR(30) NOT NULL,
+years_lived_in_Glasgow         INT NOT NULL,
+address                        VARCHAR(120),
+favourite_programming_language VARCHAR(30)
+);
+
+/// Task 3
+
+INSERT INTO mentors (name, years_lived_in_Glasgow, address, favourite_programming_language) VALUES ('John', 23, '44 Red Road', 'Java' );
+INSERT INTO mentors (name, years_lived_in_Glasgow, address, favourite_programming_language) VALUES ('Jordi', 3, '22 Main Street', 'JavaScript' );
+INSERT INTO mentors (name, years_lived_in_Glasgow, address, favourite_programming_language) VALUES ('Max', 15, '155 New Road', 'C' );
+INSERT INTO mentors (name, years_lived_in_Glasgow, address, favourite_programming_language) VALUES ('Alice', 35, '23 Old Street', 'Python' );
+INSERT INTO mentors (name, years_lived_in_Glasgow, address, favourite_programming_language) VALUES ('Bob', 1, '234 Old Street', 'Python' );
+
+/// Task 4
+
+CREATE TABLE students (
+  id                              SERIAL PRIMARY KEY,
+  name                            VARCHAR(30) NOT NULL,
+  address                         VARCHAR(120),
+  graduated_from_code_your_future BOOLEAN
+  );
+
+/// Task 5
+
+ INSERT INTO students (name, address, graduated_from_code_your_future) VALUES ('Alice', '2 High Road',true);
+ INSERT INTO students (name, address, graduated_from_code_your_future) VALUES ('Miguel', '33 High Road',false);
+ INSERT INTO students (name, address, graduated_from_code_your_future) VALUES ('Laura', '4 Preston Road',false);
+ INSERT INTO students (name, address, graduated_from_code_your_future) VALUES ('Bruno', '133 Preston Road',true);
+ INSERT INTO students (name, address, graduated_from_code_your_future) VALUES ('Jose', '77 Town Lane',true);
+ INSERT INTO students (name, address, graduated_from_code_your_future) VALUES ('Maria', '15 Blue Road',false);
+ INSERT INTO students (name, address, graduated_from_code_your_future) VALUES ('Adam', '11 Main Avenue',true);
+ INSERT INTO students (name, address, graduated_from_code_your_future) VALUES ('Ana', '33 Town Lane',true);
+ INSERT INTO students (name, address, graduated_from_code_your_future) VALUES ('Lola', '22 Green Lane',false);
+ INSERT INTO students (name, address, graduated_from_code_your_future) VALUES ('John', '77 Yellow Street',true);
+
+/// Task 6
+
+SELECT * FROM mentors
+SELECT * FROM students
+
+/// Task 7
+
+CREATE TABLE classes (
+  id        SERIAL PRIMARY KEY,
+  mentor_id INT REFERENCES mentors(id),
+  topic     VARCHAR(30),
+  date      DATE NOT NULL,
+  location  VARCHAR(30) NOT NULL
+);
+
+/// Task 8
+
+ INSERT INTO classes (mentor_id, topic, date, location) VALUES (1, 'Python','2021-11-11','Barcelona');
+ INSERT INTO classes (mentor_id, topic, date, location) VALUES (2, 'Java','2021-11-09','Barcelona');
+ INSERT INTO classes (mentor_id, topic, date, location) VALUES (3, 'JavaScript','2021-11-04','Barcelona');
+
+ /// Task 9
+
+CREATE TABLE students_attendence (
+id              SERIAL primary key,
+students_id     INT references students(id),
+classes_id      INT references classes(id)
+);
+
+
+INSERT INTO students_attendence (students_id,classes_id) VALUES (1,1);
+INSERT INTO students_attendence (students_id,classes_id) VALUES (2,1);
+INSERT INTO students_attendence (students_id,classes_id) VALUES (3,2);
+INSERT INTO students_attendence (students_id,classes_id) VALUES (9,3);
+
+/// Task 10
+
+- Retrieve all the mentors who lived more than 5 years in Glasgow
+ 
+   SELECT * FROM mentors where years_lived_in_Glasgow > 5;
+
+- Retrieve all the mentors whose favourite language is Javascript
+
+  SELECT * FROM mentors where favourite_programming_language='JavaScript'
+
+ - Retrieve all the students who are CYF graduates
+
+  SELECT * FROM students where graduated_from_code_your_future=true
+
+- Retrieve all the classes taught before June this year
+   
+   SELECT * FROM classes where date < '2022-06-01'
+
+  - Retrieve all the students (retrieving student ids only is fine) who attended the Javascript class (or any other class that you have in the `classes` table).
+
+  select students_id from  students_attendence where classes_id=2 or classes_id=3  
+
+
 ```sql
 
 
